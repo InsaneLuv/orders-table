@@ -9,11 +9,13 @@ interface Props {
 
 const SortHeader: React.FC<Props> = ({ text, onClick }) => {
   return (
-    <div className={styles.sort_header} onClick={onClick}>
-      <p>{text}</p>
+    <div className={styles.sort_header}>
+      <div className={styles.sort_clickable} onClick={onClick}>
+        <p>{text}</p>
       <span>
         <img src={arrow} alt="sort" />
       </span>
+      </div>
     </div>
   );
 };

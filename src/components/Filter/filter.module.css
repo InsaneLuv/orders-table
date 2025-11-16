@@ -8,5 +8,12 @@
 }
 
 .wrapper button {
-  margin-top: 20px;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.but_wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

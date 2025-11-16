@@ -14,7 +14,7 @@ import del from "@/assets/delete.svg";
 import Button from "@/components/UI/Button/Button";
 
 const options = [
-  { value: "", label: "Поумолчанию" },
+  { value: "", label: "По-умолчанию" },
   { value: "Эфес", label: "Эфес (Гарантии)" },
   { value: "Магнит", label: "Магнит (Гарантии)" },
 ];
@@ -45,20 +45,23 @@ const Filter: React.FC = () => {
   return (
     <div className={styles.wrapper}>
       <Select options={options} value={source} setValue={changeSource} />
-      <Input value={uid} setValue={changeUid} placeholder="uid" type="text" />
+      <Input value={uid} setValue={changeUid} placeholder="ID" type="text" />
       <Input
         value={fromPoint}
         setValue={changeFromPoint}
-        placeholder="откуда"
+        placeholder="Откуда"
         type="text"
       />
       <Input
         value={toPoint}
         setValue={changeToPoint}
-        placeholder="куда"
+        placeholder="Куда"
         type="text"
       />
-      <Button onClick={clearAllFilters} text="Сбросить фильтры" img={del} />
+      <div className={styles.but_wra}>
+      <Button onClick={clearAllFilters} text="Сбросить" img={del} />
+
+      </div>
     </div>
   );
 };

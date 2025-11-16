@@ -9,7 +9,6 @@ const OrdersHeader: React.FC = () => {
           <span>🪖 Открытые</span>
           <span className={styles.text}>рейсы</span>
         </span>
-        <span className={styles.web}>WEBAPP</span>
       </div>
     </header>
   );

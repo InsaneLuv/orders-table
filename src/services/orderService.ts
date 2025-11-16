@@ -14,7 +14,7 @@ export interface GetOrderArg {
 
 const orderApi = createApi({
   reducerPath: "orderApi",
-  baseQuery: axiosBaseQuery({ baseUrl: "http://127.0.0.1:8002/api/" }),
+  baseQuery: axiosBaseQuery({ baseUrl: "https://api.alt-crg.tw1.su/opened-monitor-bot/api/" }),
   endpoints: (build) => ({
     getOrder: build.query<IOrder[], GetOrderArg>({
       query: (args) => ({

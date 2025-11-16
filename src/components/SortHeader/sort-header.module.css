@@ -1,5 +1,10 @@
 .sort_header {
   display: flex;
   align-items: center;
+}
+
+.sort_clickable {
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }

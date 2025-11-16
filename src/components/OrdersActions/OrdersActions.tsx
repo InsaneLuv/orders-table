@@ -10,7 +10,7 @@ interface Props {
 const OrdersActions: React.FC<Props> = ({ toggler }) => {
   return (
     <div className={styles.wrapper}>
-      <Button onClick={toggler} text="фильтры" img={filter} />
+      <Button onClick={toggler} text="Фильтрация" img={filter} />
     </div>
   );
 };
