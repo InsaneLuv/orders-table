@@ -1,0 +1,15 @@
+.filter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-primary);
+  transform: translateY(100%);
+  transition: 0.3s ease;
+}
+
+.filter.active {
+  transform: translateY(0);
+  z-index: 1;
+}

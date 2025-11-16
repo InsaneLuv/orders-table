@@ -1,0 +1,6 @@
+.input {
+  background: var(--bg-tertiary);
+  padding: 8px 15px;
+  border-radius: 7px;
+  border: 1px solid var(--border-secondary);
+}

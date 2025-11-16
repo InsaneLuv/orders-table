@@ -1,0 +1,41 @@
+.header {
+  border-bottom: 1px solid var(--border-primary);
+  padding: 15px 40px;
+  font-size: 20px;
+}
+
+.info {
+  background: var(--bg-secondary);
+  padding: 8px 15px;
+  border-radius: 7px;
+}
+
+.web {
+  color: var(--text-muted);
+  margin-left: 20px;
+}
+
+.text {
+  background: var(--accent-primary);
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 500;
+  margin-left: 10px;
+  padding: 3px 15px;
+  border-radius: 7px;
+}
+
+@media (max-width: 1025px) {
+  .header {
+    padding: 15px 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header {
+    font-size: 13px;
+  }
+  .text {
+    font-size: 12px;
+  }
+}

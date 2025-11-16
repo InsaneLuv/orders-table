@@ -1,0 +1,5 @@
+.pagination {
+  padding: 20px 0;
+  position: relative;
+  background: var(--bg-primary);
+}

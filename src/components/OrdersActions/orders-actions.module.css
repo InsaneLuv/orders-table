@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+  }
+}

@@ -1,0 +1,35 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.td,
+.th {
+  border-bottom: 1px solid var(--border-primary);
+  padding: 15px 10px;
+  text-align: left;
+}
+
+.td {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.th {
+  border-top: 1px solid var(--border-primary);
+  position: relative;
+}
+
+@media (max-width: 1440px) {
+  .td {
+    max-width: 150px;
+    font-size: 12px;
+  }
+
+  .th {
+    font-size: 14px;
+  }
+}

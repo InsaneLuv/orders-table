@@ -1,0 +1,36 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.wrapper.active {
+  grid-template-columns: 1fr 300px;
+}
+
+.filter {
+  border: 1px solid var(--border-primary);
+  opacity: 0;
+  transition: 0.2s ease;
+}
+
+.wrapper.active .filter {
+  opacity: 1;
+}
+
+.table_wrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table_wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.table_wrapper::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: gray;
+}

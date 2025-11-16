@@ -1,0 +1,9 @@
+.sort {
+  display: flex;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.sort div {
+  margin-right: 15px;
+}
