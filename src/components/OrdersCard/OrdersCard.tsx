@@ -1,4 +1,4 @@
-import type { IOrder } from "@/type/main";
+import type { AxiosResOrders } from "@/type/main";
 import React from "react";
 import OrdersList from "../OrdersList/OrdersList";
 import Filter from "../Filter/Filter";
@@ -8,7 +8,7 @@ import Absence from "../Absence/Absence";
 import CardSortHeader from "./CardSortHeader/CardSortHeader";
 
 interface Props {
-  orders: IOrder[] | undefined;
+  orders: AxiosResOrders | undefined;
   isFilter: boolean;
   toggle: () => void;
 }
@@ -20,8 +20,8 @@ const OrdersCard: React.FC<Props> = ({ orders, isFilter, toggle }) => {
     <div>
       <CardSortHeader />
       <div>
-        {orders && orders.length > 0 ? (
-          <OrdersList orders={orders} />
+        {orders && orders.items.length > 0 ? (
+          <OrdersList orders={orders.items} />
         ) : (
           <Absence />
         )}

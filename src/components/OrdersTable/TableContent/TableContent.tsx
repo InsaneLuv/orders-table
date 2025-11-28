@@ -10,31 +10,31 @@ import {
 import convertToReadableDate from "@/helper/readableDate";
 import { useAppDispatch } from "@/hooks/redux";
 import { setSortBy } from "@/store/reducers/orderSlice";
-import type { IOrder } from "@/type/main";
-import React from "react";
+import type { Distribution } from "@/type/main";
+import React, { type JSX } from "react";
 import TableContentAction from "./TableContentAction/TableContentAction";
 import SortHeader from "@/components/SortHeader/SortHeader";
 
-const TableContent: React.FC<{ orders: IOrder[] }> = ({ orders }) => {
+const TableContent: React.FC<{ orders: Distribution[] }> = ({ orders }) => {
   const dispatch = useAppDispatch();
 
   const sortLoading = () => {
-    dispatch(setSortBy("loading_dt"));
+    dispatch(setSortBy("departure.planed_date"));
   };
 
   const sortFromPoint = () => {
-    dispatch(setSortBy("points.0"));
+    dispatch(setSortBy("departure.city_name"));
   };
 
   const sortToPoint = () => {
-    dispatch(setSortBy("points.1"));
+    dispatch(setSortBy("destination.city_name"));
   };
 
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeader>ID</TableHeader>
+          <TableHeader>Номер</TableHeader>
           <TableHeader>
             <SortHeader onClick={sortLoading} text="Погрузка" />
           </TableHeader>
@@ -55,16 +55,61 @@ const TableContent: React.FC<{ orders: IOrder[] }> = ({ orders }) => {
 
       <TableBody>
         {orders.map((order) => (
-          <TableRow key={order.uid}>
-            <TableCell>{order.uid}</TableCell>
-            <TableCell>{convertToReadableDate(order.loading_dt)}</TableCell>
-            <TableCell>{order.points[0]}</TableCell>
-            <TableCell>{order.points[order.points.length - 1]}</TableCell>
-            <TableCell>{order.cargo}</TableCell>
-            <TableCell>{order.veh}</TableCell>
-            <TableCell>{order.cost}</TableCell>
-            <TableCell>{order.source}</TableCell>
-            <TableCell>{order.worker}</TableCell>
+          <TableRow key={order.distr_id}>
+<TableCell>
+  {order.distr_id}
+</TableCell>
+ <TableCell>{convertToReadableDate(order.order.route.points[0].planed_date)}</TableCell>
+            <TableCell>{order.order.route.points[0].city_name}</TableCell>
+            <TableCell>{order.order.route.points[order.order.route.points.length - 1].city_name}</TableCell>
+<TableCell>
+  {(() => {
+    const list = order.order.cargo?.list;
+    if (!list || !Array.isArray(list)) return '';
+    
+    const countMap = new Map<string, number>();
+    list.forEach(item => {
+      countMap.set(item, (countMap.get(item) || 0) + 1);
+    });
+    
+    const result: JSX.Element[] = [];
+    countMap.forEach((count, item) => {
+      if (count > 1) {
+        result.push(
+          <span key={item}>
+            {item} <span style={{ opacity: 0.6, fontSize: '0.9em' }}>(x{count})</span>
+          </span>
+        );
+      } else {
+        result.push(<span key={item}>{item}</span>);
+      }
+    });
+    
+    return (
+      <>
+        {result.reduce((acc: JSX.Element[], element, index) => {
+          if (index > 0) {
+            acc.push(<span key={`comma-${index}`}>, </span>);
+          }
+          acc.push(element);
+          return acc;
+        }, [])}
+      </>
+    );
+  })()}
+</TableCell>
+            <TableCell>{order.order.veh.type}</TableCell>
+            <TableCell>
+  {order.cost || '-'} / {order.cost_nds || '-'}
+</TableCell>
+            <TableCell>{order.order.meta.client_name}</TableCell>
+<TableCell>
+{(order.worker?.first_name || order.pending?.first_name) && (
+  <span className={`pill ${order.pending ? 'pill-green' : 'pill-blue'}`}>
+    {order.pending ? '🕵️' : '🪖'} {order.pending?.first_name || order.worker?.first_name}
+  </span>
+)}
+</TableCell>
             <TableCell>
               <TableContentAction order={order} />
             </TableCell>

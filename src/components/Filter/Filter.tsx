@@ -8,19 +8,22 @@ import {
   setFromPoint,
   setSource,
   setToPoint,
-  setUid,
+  setTripId,
 } from "@/store/reducers/orderSlice";
 import del from "@/assets/delete.svg";
 import Button from "@/components/UI/Button/Button";
 
 const options = [
-  { value: "", label: "По-умолчанию" },
-  { value: "Эфес", label: "Эфес (Гарантии)" },
-  { value: "Магнит", label: "Магнит (Гарантии)" },
+  { value: "", label: "Все источники" },
+  { value: 'СЕЛЬТА', label: "Сельта (Гарантии)" },
+  { value: 'ООО "СЕЛЬТА"', label: "Сельта (Спот)" },
+  { value: 'AB InBev Efes', label: "Эфес (Гарантии)" },
+  { value: 'АО "АБ ИНБЕВ ЭФЕС"', label: "Эфес (Спот)" },
+  { value: 'ООО "А ЛОГИСТИКС"', label: "Аскона (Спот)" },
 ];
 
 const Filter: React.FC = () => {
-  const { source, uid, toPoint, fromPoint } = useAppSelector(
+  const { source, trip_id, toPoint, fromPoint } = useAppSelector(
     (state) => state.orderReducer
   );
 
@@ -29,8 +32,8 @@ const Filter: React.FC = () => {
   const changeSource = (value: string) => {
     dispatch(setSource(value));
   };
-  const changeUid = (value: string) => {
-    dispatch(setUid(value));
+  const changeTripId = (value: string) => {
+    dispatch(setTripId(value));
   };
   const changeToPoint = (value: string) => {
     dispatch(setToPoint(value));
@@ -41,21 +44,22 @@ const Filter: React.FC = () => {
   const clearAllFilters = () => {
     dispatch(clearFilter());
   };
-
+  // const {data: sources} = useGetSourcesQuery()
+  // console.log(sources);
   return (
     <div className={styles.wrapper}>
       <Select options={options} value={source} setValue={changeSource} />
-      <Input value={uid} setValue={changeUid} placeholder="ID" type="text" />
+      <Input value={trip_id} setValue={changeTripId} placeholder="Номер транспортировки" type="Номер транспортировки" />
       <Input
         value={fromPoint}
         setValue={changeFromPoint}
-        placeholder="Откуда"
+        placeholder="Отправка"
         type="text"
       />
       <Input
         value={toPoint}
         setValue={changeToPoint}
-        placeholder="Куда"
+        placeholder="Прибытие"
         type="text"
       />
       <div className={styles.but_wra}>

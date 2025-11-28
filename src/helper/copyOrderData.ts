@@ -1,18 +1,9 @@
-import type { IOrder } from "@/type/main";
-import convertToReadableDate from "./readableDate";
+import type { Distribution } from "@/type/main";
 
-const copyOrderData = (order: IOrder) => {
+const copyOrderData = (order: Distribution) => {
   const orderText = `
-${order.uid}
-${order.status}
-${convertToReadableDate(order.loading_dt)}
-${order.points[0]}
-${order.points[order.points.length - 1]}
-${order.cargo}
-${order.veh}
-${order.cost}
-${order.source}
-${order.worker}`.trim();
+${order.order.meta.trip_id}
+${order.status}`.trim();
   navigator.clipboard.writeText(orderText);
 };
 

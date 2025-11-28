@@ -1,4 +1,3 @@
-import OrdersActions from "@/components/OrdersActions/OrdersActions";
 import OrdersHeader from "@/components/OrdersHeader/OrdersHeader";
 import useWindowWidth from "@/hooks/useWindowWidth";
 import { useGetOrderQuery } from "@/services/orderService";
@@ -7,7 +6,6 @@ import styles from "./orders-page.module.css";
 import OrdersTable from "@/components/OrdersTable/OrdersTable";
 import OrdersCard from "@/components/OrdersCard/OrdersCard";
 import { useAppSelector } from "@/hooks/redux";
-import PaginationBar from "@/components/PaginationBar/PaginationBar";
 import useDebounce from "@/hooks/useDebounce";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import Loading from "@/components/Loading/Loading";
@@ -15,13 +13,14 @@ import Loading from "@/components/Loading/Loading";
 const OrdersPage: React.FC = () => {
   const [isFilter, setIsFilter] = useState<boolean>(false);
 
-  const { source, uid, fromPoint, toPoint, page, sortBy } = useAppSelector(
+  const { source, trip_id, fromPoint, toPoint, page, sortBy, sortDir } = useAppSelector(
     (state) => state.orderReducer
   );
 
-  const debouncedUid = useDebounce(uid, 500);
+  const debouncedTripId = useDebounce(trip_id, 500);
   const debouncedFromPoint = useDebounce(fromPoint, 500);
   const debouncedToPoint = useDebounce(toPoint, 500);
+  const isTablet = useWindowWidth(1024);
 
   const {
     data: orders,
@@ -29,20 +28,22 @@ const OrdersPage: React.FC = () => {
     isError,
     error,
   } = useGetOrderQuery({
-    uid: debouncedUid,
+    trip_id: debouncedTripId,
     from_point: debouncedFromPoint,
     to_point: debouncedToPoint,
     source,
-    limit: 10,
+    limit: 300,
     page: page,
     sort_by: sortBy,
+    sort_dir: sortDir,
   });
-
-  const isTablet = useWindowWidth(1024);
 
   const toggler = () => {
     setIsFilter((prev) => !prev);
   };
+
+  // Используем total_pages из ответа API
+  // const totalPages = orders?.total_pages || 1;
 
   if (isLoading) {
     return <Loading />;
@@ -54,15 +55,14 @@ const OrdersPage: React.FC = () => {
 
   return (
     <div>
-      <OrdersHeader />
+      <OrdersHeader toggler={toggler} />
       <div className={styles.wrapper}>
-        <OrdersActions toggler={toggler} />
         {isTablet ? (
           <OrdersCard orders={orders} isFilter={isFilter} toggle={toggler} />
         ) : (
           <OrdersTable orders={orders} isFilter={isFilter} />
         )}
-        <PaginationBar totalPage={5} />
+        {/* <PaginationBar totalPage={totalPages} /> */}
       </div>
     </div>
   );

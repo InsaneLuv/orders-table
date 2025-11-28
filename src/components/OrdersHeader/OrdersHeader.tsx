@@ -1,7 +1,15 @@
 import React from "react";
 import styles from "./orders-header.module.css";
+import OrdersActions from "../OrdersActions/OrdersActions";
+import useKeyPress from "@/hooks/userKeyPress";
 
-const OrdersHeader: React.FC = () => {
+interface Props {
+  toggler: () => void;
+};
+
+
+const OrdersHeader: React.FC<Props> = ({toggler}) => {
+  useKeyPress("Escape", toggler)
   return (
     <header className={styles.header}>
       <div>
@@ -10,6 +18,8 @@ const OrdersHeader: React.FC = () => {
           <span className={styles.text}>рейсы</span>
         </span>
       </div>
+      <OrdersActions toggler={toggler} />
+      
     </header>
   );
 };

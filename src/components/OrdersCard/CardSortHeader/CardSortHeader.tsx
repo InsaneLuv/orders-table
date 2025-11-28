@@ -8,15 +8,15 @@ const CardSortHeader: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const sortLoading = () => {
-    dispatch(setSortBy("loading_dt"));
+    dispatch(setSortBy("departure.planed_date"));
   };
 
   const sortFromPoint = () => {
-    dispatch(setSortBy("points.0"));
+    dispatch(setSortBy("departure.city_name"));
   };
 
   const sortToPoint = () => {
-    dispatch(setSortBy("points.1"));
+    dispatch(setSortBy("destination.city_name"));
   };
 
   return (

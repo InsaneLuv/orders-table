@@ -1,19 +1,36 @@
 import copyOrderData from "@/helper/copyOrderData";
-import type { IOrder } from "@/type/main";
+import type { Distribution } from "@/type/main";
 import React from "react";
 import copy from "@/assets/copy.svg";
 import linkIcon from "@/assets/link.svg";
 import styles from "./table-content-action.module.css";
 
-const TableContentAction: React.FC<{ order: IOrder }> = ({ order }) => {
+const TableContentAction: React.FC<{ order: Distribution }> = ({ order }) => {
+  const handleCopyClick = () => {
+    copyOrderData(order);
+  };
+
+  // Шифруем всю строку "otc_uid" в base64
+  const encodedData = btoa(`otc_${order.order.uid || ''}`);
+  const telegramLink = `https://t.me/opened_test_bot?start=${encodedData}`;
+
   return (
-    <div>
-      <button onClick={() => copyOrderData(order)} className={styles.btn}>
-        <img src={copy} alt="copy" />
+    <div className={styles.actions}>
+      <button 
+        onClick={handleCopyClick} 
+        className={styles.btn}
+        type="button"
+      >
+        <img src={copy} alt="Copy order data" />
       </button>
 
-      <a href={`https://t.me`} target="_blank" rel="noopener noreferrer">
-        <img src={linkIcon} alt="link" />
+      <a 
+        href={telegramLink} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className={styles.link}
+      >
+        <img src={linkIcon} alt="Open in Telegram" />
       </a>
     </div>
   );
