@@ -1,0 +1,32 @@
+stages:
+  - build
+
+variables:
+  CI_REGISTRY: gitlab-registry.gitlab.svc.cluster.local:5000
+
+.kaniko-base:
+  tags:
+    - k8s
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+kaniko-build:
+  extends: .kaniko-base
+  script:
+    - >-
+      /kaniko/executor
+      --context="${CI_PROJECT_DIR}"
+      --dockerfile="${CI_PROJECT_DIR}/Dockerfile"
+      --destination="${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}"
+      --cache=true
+      --cache-dir="/kaniko/cache"
+  only:
+    - main
+    - dev
+    - feature
+

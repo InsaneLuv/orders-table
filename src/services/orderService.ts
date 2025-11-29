@@ -15,7 +15,7 @@ export interface GetOrderArg {
 
 const orderApi = createApi({
   reducerPath: "orderApi",
-  baseQuery: axiosBaseQuery({ baseUrl: "https://mntr.ru.tuna.am/api/" }),
+  baseQuery: axiosBaseQuery({ baseUrl: import.meta.env.API_BASE_URL }),
   endpoints: (build) => ({
     getOrder: build.query<AxiosResOrders, GetOrderArg>({
       query: (args) => ({
